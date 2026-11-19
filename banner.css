@@ -1,5 +1,5 @@
-body:has(.hero) header { background:#101719; }
-body:has(.hero) .header-inner {
+.portal-header { background:#101719; }
+.header-inner {
   max-width:1440px;
   min-height:72px;
   padding-inline:clamp(22px,5vw,80px);
