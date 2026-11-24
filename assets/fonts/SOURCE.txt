@@ -1,0 +1,21 @@
+Noto Serif SC and Noto Serif TC — portal display subsets
+License: SIL Open Font License 1.1 (see OFL.txt).
+Font copyright retained in both font binaries: (c) 2017–2024 Adobe.
+
+Upstream font families and license:
+https://github.com/google/fonts/tree/main/ofl/notoserifsc
+https://github.com/google/fonts/tree/main/ofl/notoseriftc
+
+noto-serif-sc-display.woff2 is a variable Noto Serif SC subset.
+noto-serif-tc-display.woff2 is the static SemiBold (600) Noto Serif TC subset.
+Each includes printable ASCII and the localized glyphs needed for homepage titles.
+
+When updating display copy, download the full upstream font first. Build a local
+UTF-8 character list from portal-copy.js using heroTitle, productTitle, flowTitle,
+terminalTitle, faqTitle, contactTitle, manualTitle, terminalNames, product names,
+promises, features and experience headings. Decode HTML entities and strip markup.
+Include printable ASCII and localized punctuation. For a variable source intended
+for a static weight, instantiate weight 600 before subsetting. With fonttools and
+brotli installed locally, regenerate and confirm the output cmap covers the list:
+
+pyftsubset FULL_FONT --text-file=CHARS.txt --layout-features='*' --name-IDs='*' --flavor=woff2 --output-file=OUTPUT.woff2

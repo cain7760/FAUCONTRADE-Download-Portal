@@ -1,104 +1,17 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="portal-page">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191c">
+  <title>FAUCON TRADE · 产品介绍与使用支持</title>
   <link rel="icon" href="data:,">
-  <title>FAUCON TRADE · 下载与访问</title>
-  <style>
-    * { box-sizing: border-box; }
-    html { scroll-padding-top: 72px; }
-    body { margin: 0; background: white; color: #20242a; font: 15px/1.75 Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
-    .wrap { max-width: 1120px; margin-inline: auto; padding-inline: 28px; }
-    header { position: sticky; top: 0; z-index: 5; color: #f7f7f7; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; }
-    .brand img { display: block; width: 142px; height: auto; }
-    .language-control { position: relative; display: inline-flex; }
-    .language-control::after { content: ""; position: absolute; right: 10px; top: calc(50% - 4px); width: 5px; height: 5px; border: solid currentColor; border-width: 0 1px 1px 0; transform: rotate(45deg); pointer-events: none; }
-    .language { appearance: none; color-scheme: dark; background: #25292e; color: #fff; border: 1px solid #4b5057; border-radius: 4px; height: 28px; padding: 3px 23px 3px 8px; font: inherit; font-size: 11px; }
-    :focus-visible { outline: 3px solid #bfa36c; outline-offset: 4px; }
-    #terminals { padding-block: 64px; border-bottom: 1px solid #dfe3e6; }
-    #terminals h2 { margin: 0 0 12px; font-size: 30px; line-height: 1.4; font-weight: 600; letter-spacing: -.02em; }
-    #terminals p { color: #66707a; }
-    .intro { margin: 0 0 30px; }
-    .terminal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-    .terminal { display: flex; flex-direction: column; padding: 25px; border: 1px solid #dfe3e6; border-radius: 4px; }
-    .terminal h3 { margin: 0 0 12px; font-size: 20px; line-height: 1.45; font-weight: 600; }
-    .terminal p { margin: 0 0 18px; font-size: 14px; }
-    .terminal button { margin-top: auto; width: 100%; min-height: 42px; padding: 8px 12px; color: #20242a; background: white; border: 1px solid #cdd2d7; border-radius: 4px; font: inherit; font-size: 12px; }
-    .terminal button:disabled { opacity: .55; }
-    @media (max-width: 700px) {
-      .wrap { padding-inline: 22px; }
-      .brand img { width: 124px; }
-      #terminals { padding-block: 44px; }
-      #terminals h2 { font-size: 25px; }
-      .terminal-grid { grid-template-columns: 1fr; gap: 16px; }
-      .terminal { padding: 21px; }
-    }
-  </style>
-  <link rel="stylesheet" href="banner.css">
+  <link rel="stylesheet" href="portal.css">
+  <link rel="stylesheet" href="destinations.css">
+  <link rel="stylesheet" href="manual.css">
+  <script type="module" src="portal.js"></script>
 </head>
 <body>
-  <header class="portal-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="#home"><img src="assets/logo.png" width="1085" height="277" alt="FAUCON TRADE"></a>
-      <span class="language-control"><select class="language" aria-label="Language">
-        <option value="zh-CN">简体中文</option>
-        <option value="zh-TW">繁體中文</option>
-        <option value="en">English</option>
-      </select></span>
-    </div>
-  </header>
-  <main>
-    <section class="hero" id="home">
-      <img class="district-photo" src="assets/financial-district.webp" alt="" width="1672" height="941" fetchpriority="high">
-      <div class="wrap">
-        <h1><span data-tw="TRS 與期權" data-en="TRS &amp; Options">TRS 与期权</span><br><span data-tw="一體化交易終端" data-en="Trading Terminal">一体化交易终端</span></h1>
-        <p class="lead" data-tw="流程透明，工具多樣，便捷操作" data-en="Transparent workflows. Versatile tools. Easy operation.">流程透明，工具多样，便捷操作</p>
-      </div>
-    </section>
-    <section id="terminals" aria-labelledby="terminal-title">
-      <div class="wrap">
-        <h2 id="terminal-title" data-tw="多種終端，適配不同工作場景" data-en="Different devices. Different ways to work.">多种终端，适配不同工作场景</h2>
-        <p class="intro"><span data-tw="桌面端集中處理，Web 端便捷存取。" data-en="Work at your desk or access your account through a browser.">桌面端集中处理，Web 端便捷访问。</span><br><span data-tw="選擇適合目前場景的終端，讓工作安排更靈活。" data-en="Choose the terminal that fits the task at hand.">选择适合当前场景的终端，让工作安排更灵活。</span></p>
-        <div class="terminal-grid">
-          <article class="terminal">
-            <h3 data-tw="TRS客戶端" data-en="TRS client">TRS客户端</h3>
-            <p data-tw="為桌面工作場景提供安裝式入口。展開持倉、訂單與交易面板，在電腦上集中處理日常操作。" data-en="An installed entry point for desk-based work. Bring positions, orders and trading controls into view while handling everyday tasks on your computer.">为桌面工作场景提供安装式入口。展开持仓、订单与交易面板，在电脑上集中处理日常操作。</p>
-            <button type="button" disabled data-tw="下載 Windows 客戶端" data-en="Download Windows client">下载 Windows 客户端</button>
-          </article>
-          <article class="terminal">
-            <h3 data-tw="期權交易端" data-en="Options trading terminal">期权交易端</h3>
-            <p data-tw="透過瀏覽器登入客戶帳戶，進入期權頁面發起詢價。" data-en="Sign in to your customer account in a browser and request a quote on the options page.">通过浏览器登录客户账户，进入期权页面发起询价。</p>
-            <button type="button" disabled data-tw="客戶入口" data-en="Customer access">客户入口</button>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-  <script>
-    const select = document.querySelector('.language');
-    const titles = { 'zh-CN': '下载与访问', 'zh-TW': '下載與存取', en: 'Downloads and access' };
-    const translations = Array.from(document.querySelectorAll('[data-tw]'), element => ({
-      element,
-      copy: { 'zh-CN': element.textContent, 'zh-TW': element.dataset.tw, en: element.dataset.en }
-    }));
-
-    function setLanguage(language) {
-      if (!Object.hasOwn(titles, language)) language = 'zh-CN';
-      document.documentElement.lang = language;
-      document.title = 'FAUCON TRADE · ' + titles[language];
-      select.value = language;
-      for (const { element, copy } of translations) element.textContent = copy[language];
-    }
-
-    setLanguage(new URL(location.href).searchParams.get('lang'));
-    select.addEventListener('change', () => {
-      const url = new URL(location.href);
-      url.searchParams.set('lang', select.value);
-      history.replaceState(null, '', url);
-      setLanguage(select.value);
-    });
-  </script>
+  <div id="app"></div>
 </body>
 </html>
