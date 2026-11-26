@@ -2,6 +2,7 @@ const heroEnglishTitle = 'INTEGRATED TRS &amp; OPTIONS TRADING TERMINAL';
 
 export const copy = {
   "zh-CN": {
+    "portalLogin": "登录官网",
     "nav": [
       "产品介绍",
       "操作演示",
@@ -190,6 +191,7 @@ export const copy = {
     }
   },
   "zh-TW": {
+    "portalLogin": "登入官網",
     "nav": [
       "產品介紹",
       "操作示範",
@@ -378,6 +380,7 @@ export const copy = {
     }
   },
   "en": {
+    "portalLogin": "Sign in",
     "nav": [
       "Products",
       "Walkthrough",

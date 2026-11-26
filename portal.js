@@ -16,6 +16,28 @@ let language = resolveLanguage(requestedLanguage);
 let renderedRoute = '';
 let releaseHome;
 
+function hasCustomerSession() {
+  try {
+    return Boolean(sessionStorage.getItem('faucon-demo-login-account')?.trim());
+  } catch {
+    return false;
+  }
+}
+
+function portalLoginHref() {
+  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const login = local
+    ? new URL(location.origin)
+    : new URL('https://cain7760.github.io/FAUCONTRADE-Customer-PC/login.html');
+  if (local) {
+    login.port = '4177';
+    login.pathname = '/login.html';
+  }
+  login.searchParams.set('from', 'portal');
+  login.searchParams.set('lang', language);
+  return login.href;
+}
+
 function renderHeader(t) {
   return `
     <a class="skip-link" href="#main-content">${t.skip}</a>
@@ -26,6 +48,7 @@ function renderHeader(t) {
         </a>
         <nav class="site-nav" aria-label="${t.footer}">
           ${sections.map((section,index) => `<a href="#${section}">${t.nav[index]}</a>`).join('')}
+          ${hasCustomerSession() ? '' : `<a class="portal-login" href="${portalLoginHref()}">${t.portalLogin}</a>`}
         </nav>
         <div class="language-control">${renderLanguageMenu(language, t.languageLabel)}</div>
       </div>
@@ -71,7 +94,7 @@ function render({ preserveScroll = false, menuClick = false, keyboard = false } 
     releaseHome = route.chapter ? undefined : bindHome(app.querySelector('main'), t);
     renderedRoute = route.key;
   }
-  app.querySelectorAll('.site-nav a').forEach(link => {
+  app.querySelectorAll('.site-nav a[href^="#"]').forEach(link => {
     if (link.hash === location.hash) link.setAttribute('aria-current','location');
     else link.removeAttribute('aria-current');
   });
@@ -98,7 +121,7 @@ function render({ preserveScroll = false, menuClick = false, keyboard = false } 
 }
 
 app.addEventListener('click', event => {
-  const menuLink = event.target.closest('.site-nav a');
+  const menuLink = event.target.closest('.site-nav a[href^="#"]');
   if (menuLink && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) {
     event.preventDefault();
     if (menuLink.hash !== location.hash) history.pushState(null, '', menuLink.href);
