@@ -2,7 +2,24 @@ const heroEnglishTitle = 'INTEGRATED TRS &amp; OPTIONS TRADING TERMINAL';
 
 export const copy = {
   "zh-CN": {
-    "portalLogin": "登录官网",
+    "loginToView": "登录查看全部",
+    "loginDialog": {
+      "title": "欢迎登录",
+      "intro": "登录猎盈交易端，继续把握每一个交易机会。",
+      "close": "关闭登录弹窗",
+      "username": "用户名",
+      "enterUsername": "请输入用户名",
+      "password": "密码",
+      "enterPassword": "请输入密码",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码",
+      "remember": "记住密码",
+      "forgot": "忘记密码？",
+      "help": "请联系您的账户管理员重置密码。",
+      "error": "暂时无法登录，请重试。",
+      "submit": "登录",
+      "demo": "演示demo，请随意输入名称和密码进行登录"
+    },
     "nav": [
       "产品介绍",
       "操作演示",
@@ -51,6 +68,7 @@ export const copy = {
     ],
     "flowTitle": "操作更顺手，交易更高效",
     "flowText": "从持仓视图进入下单面板，查看如何在同一界面配置 POV 执行时段与市场成交占比。",
+    "demoTabs": ["下单", "改单", "平仓"],
     "terminalTitle": "多种终端，适配不同下单场景",
     "terminalText": "桌面端集中处理，Web 端便捷访问，移动端随身查看。<br>选择适合当前场景的终端，让交易安排更灵活。",
     "terminalNames": [
@@ -69,8 +87,9 @@ export const copy = {
       "把关注的信息带在身边。在移动设备上查看持仓、订单与成交记录，随时了解订单进展。"
     ],
     "download": "下载 Windows 客户端",
-    "customer": "客户入口",
-    "appEntry": "获取移动 App",
+    "customer": "进入网页端",
+    "appEntry": "前往h5访问",
+    "guestAppEntry": "前往H5访问",
     "faqTitle": "每一次开始，都有指引",
     "faqText": "按问题查阅操作手册中的对应说明。",
     "faqs": [
@@ -113,7 +132,7 @@ export const copy = {
         "选择终端并进入系统",
         [
           "根据设备选择 Windows 客户端、Web 端或移动 App，查看对应系统要求与访问说明。",
-          "打开已安装的客户端，或通过「客户入口」打开 Web 交易端，再使用客户账户登录。",
+          "打开已安装的客户端，或选择「进入网页端」，再使用客户账户登录。",
           "登录后核对当前账户，再查看对应产品功能。"
         ]
       ],
@@ -172,11 +191,11 @@ export const copy = {
         "在交易客户端录入并提交委托。<br>也可通过交易程序调用 <span class='order-phrase'>FIX 接口下单。</span>"
       ]
     ],
-    "motionAlt": "搜索平安银行，以每股 11.78 元提交 10,000 股买单，并查看订单状态。",
+    "demoDescriptions": ["设置 POV 执行时段与市场成交占比，提交买入委托。", "修改订单价格或数量，将算法切换为 DMA 后提交。", "选择持仓，设置平仓数量和 POV 参数，提交卖出委托。"],
     "skip": "跳到正文",
     "languageLabel": "选择语言",
     "overview": "交易流程与接入方式",
-    "terminalPending": "正式入口待发布",
+    "terminalPending": "安装包待发布",
     "banner": {
       "scenes": [
         "游隼",
@@ -191,7 +210,24 @@ export const copy = {
     }
   },
   "zh-TW": {
-    "portalLogin": "登入官網",
+    "loginToView": "登入查看全部內容",
+    "loginDialog": {
+      "title": "歡迎登入",
+      "intro": "登入獵盈交易端，繼續把握每一個交易機會。",
+      "close": "關閉登入視窗",
+      "username": "使用者名稱",
+      "enterUsername": "請輸入使用者名稱",
+      "password": "密碼",
+      "enterPassword": "請輸入密碼",
+      "showPassword": "顯示密碼",
+      "hidePassword": "隱藏密碼",
+      "remember": "記住密碼",
+      "forgot": "忘記密碼？",
+      "help": "請聯絡您的帳戶管理員重設密碼。",
+      "error": "暫時無法登入，請重試。",
+      "submit": "登入",
+      "demo": "演示 demo，請任意輸入名稱和密碼登入"
+    },
     "nav": [
       "產品介紹",
       "操作示範",
@@ -240,6 +276,7 @@ export const copy = {
     ],
     "flowTitle": "操作更順手，交易更高效",
     "flowText": "從持倉畫面進入下單面板，查看如何在同一介面設定 POV 執行時段與市場成交佔比。",
+    "demoTabs": ["下單", "改單", "平倉"],
     "terminalTitle": "多種終端，適配不同下單場景",
     "terminalText": "桌面端集中處理，Web 端便捷存取，行動端隨身查看。<br>選擇適合目前場景的終端，讓交易安排更靈活。",
     "terminalNames": [
@@ -258,8 +295,9 @@ export const copy = {
       "把關注的資訊帶在身邊。在行動裝置上查看持倉、訂單與成交紀錄，隨時掌握訂單進度。"
     ],
     "download": "下載 Windows 客戶端",
-    "customer": "客戶入口",
-    "appEntry": "取得行動 App",
+    "customer": "進入網頁端",
+    "appEntry": "前往h5訪問",
+    "guestAppEntry": "前往H5訪問",
     "faqTitle": "每一次開始，都有指引",
     "faqText": "依照問題查閱操作手冊中的對應說明。",
     "faqs": [
@@ -302,7 +340,7 @@ export const copy = {
         "選擇終端並進入系統",
         [
           "根據裝置選擇 Windows 客戶端、Web 端或行動 App，查看對應系統要求與存取說明。",
-          "開啟已安裝的客戶端，或透過「客戶入口」開啟 Web 交易端，再使用客戶帳戶登入。",
+          "開啟已安裝的客戶端，或選擇「進入網頁端」，再使用客戶帳戶登入。",
           "登入後核對目前帳戶，再查看對應產品功能。"
         ]
       ],
@@ -361,11 +399,11 @@ export const copy = {
         "在交易客戶端輸入並提交委託。<br>也可透過交易程式使用 <span class='order-phrase'>FIX 介面下單。</span>"
       ]
     ],
-    "motionAlt": "搜尋平安銀行，以每股 11.78 元提交 10,000 股買單，並查看訂單狀態。",
+    "demoDescriptions": ["設定 POV 執行時段與市場成交佔比，提交買入委託。", "修改訂單價格或數量，將演算法切換為 DMA 後提交。", "選擇持倉，設定平倉數量和 POV 參數，提交賣出委託。"],
     "skip": "跳至正文",
     "languageLabel": "選擇語言",
     "overview": "交易流程與接入方式",
-    "terminalPending": "正式入口待發布",
+    "terminalPending": "安裝套件待發布",
     "banner": {
       "scenes": [
         "遊隼",
@@ -380,7 +418,24 @@ export const copy = {
     }
   },
   "en": {
-    "portalLogin": "Sign in",
+    "loginToView": "Sign in to view all content",
+    "loginDialog": {
+      "title": "Welcome back",
+      "intro": "Sign in to your FAUCON TRADE terminal.",
+      "close": "Close sign-in dialog",
+      "username": "Username",
+      "enterUsername": "Enter your username",
+      "password": "Password",
+      "enterPassword": "Enter your password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "remember": "Remember password",
+      "forgot": "Forgot password?",
+      "help": "Contact your account administrator to reset your password.",
+      "error": "Unable to sign in. Please try again.",
+      "submit": "Sign in",
+      "demo": "Demo. Enter any username and password to sign in."
+    },
     "nav": [
       "Products",
       "Walkthrough",
@@ -429,6 +484,7 @@ export const copy = {
     ],
     "flowTitle": "Easier order entry. More efficient trading.",
     "flowText": "Move from positions to the order ticket and see how to set the POV execution window and volume participation rate in the same interface.",
+    "demoTabs": ["Place order", "Amend order", "Close position"],
     "terminalTitle": "Different devices. Different ways to place orders.",
     "terminalText": "Manage trades on your desktop, sign in through a browser or check records on your mobile device.<br>Choose the terminal that fits the way you trade.",
     "terminalNames": [
@@ -447,8 +503,8 @@ export const copy = {
       "Keep your trading activity close at hand. Review positions, orders and fills on your mobile device and follow order progress wherever you are."
     ],
     "download": "Download Windows client",
-    "customer": "Customer access",
-    "appEntry": "Get the mobile app",
+    "customer": "Open web terminal",
+    "appEntry": "Open mobile web app",
     "faqTitle": "Guidance from the first step",
     "faqText": "Select a question to open the relevant section of the user manual.",
     "faqs": [
@@ -491,7 +547,7 @@ export const copy = {
         "Choose a terminal and access the system",
         [
           "Choose the Windows client, web terminal or mobile app for your device. Review its system requirements and access instructions.",
-          "Open the installed client or select Customer access to open the web terminal. Then sign in with your customer account.",
+          "Open the installed client or select “Open web terminal”. Then sign in with your customer account.",
           "After signing in, check that you have the correct account before using its trading features."
         ]
       ],
@@ -550,11 +606,11 @@ export const copy = {
         "Enter and submit orders in the client, or send them from your trading system via FIX."
       ]
     ],
-    "motionAlt": "Search for Ping An Bank, submit a buy order for 10,000 shares at CNY 11.78 per share, and check the order status.",
+    "demoDescriptions": ["Set the POV execution window and participation rate, then submit a buy order.", "Amend an order price or quantity, switch the algorithm to DMA, and submit the changes.", "Select a position, set the closing quantity and POV parameters, then submit a sell order."],
     "skip": "Skip to content",
     "languageLabel": "Select language",
     "overview": "Trading workflow and access",
-    "terminalPending": "Access links pending",
+    "terminalPending": "Installer pending",
     "banner": {
       "scenes": [
         "Falcon",

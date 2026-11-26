@@ -4,29 +4,33 @@ const deviceSymbols = [
   '<path fill-rule="evenodd" d="M8 1h8a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Zm2.5 2.5a1 1 0 0 0 0 2h3a1 1 0 0 0 0-2h-3Zm-.5 15a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-4Z"/>',
 ];
 
-function terminalAction(index, label) {
+const terminalURLs = [null, "https://cain7760.github.io/FAUCONTRADE-Customer-PC/login.html", "https://cain7760.github.io/FAUCON-TRADE-Customer-App/"];
+
+function terminalAction(index, label, guest, unavailableLabel) {
   const content = `<svg class="device-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${deviceSymbols[index]}</svg><span>${label}</span>`;
-  if (index === 1) {
-    return `<a class="terminal-action" href="https://cain7760.github.io/FAUCONTRADE-Customer-PC/login.html">${content}</a>`;
+  if (guest) {
+    return `<button class="terminal-action" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">${content}</button>`;
   }
-  return `<button class="terminal-action" type="button" disabled aria-describedby="terminal-status">${content}</button>`;
+  const href = terminalURLs[index];
+  if (href) return `<a class="terminal-action" href="${href}">${content}</a>`;
+  return `<button class="terminal-action" type="button" disabled>${unavailableLabel}</button>`;
 }
 
-function renderTerminals(t) {
-  const actions = [t.download, t.customer, t.appEntry];
+export function renderTerminals(t, { compact = false } = {}) {
+  const mobileEntry = compact ? (t.guestAppEntry ?? t.appEntry) : t.appEntry;
+  const actions = [t.download, t.customer, mobileEntry];
   return `
     <section class="access-band" id="terminals" aria-labelledby="terminals-title">
       <div class="wrap">
-        <h2 class="destination-title" id="terminals-title">${t.terminalTitle}</h2>
-        <p class="destination-intro">${t.terminalText}</p>
-        <p id="terminal-status" class="sr-only">${t.terminalPending}</p>
+        <h2 class="${compact ? 'sr-only' : 'destination-title'}" id="terminals-title">${t.terminalTitle}</h2>
+        ${compact ? '' : `<p class="destination-intro">${t.terminalText}</p>`}
         <div class="terminal-cards">
           ${t.terminalNames.map((name, index) => `
             <article class="terminal-card">
-              <span class="terminal-platform">${t.terminalPlatforms[index]}</span>
+              ${compact ? '' : `<span class="terminal-platform">${t.terminalPlatforms[index]}</span>`}
               <h3>${name}</h3>
-              <p>${t.terminalTexts[index]}</p>
-              ${terminalAction(index, actions[index])}
+              ${compact ? '' : `<p>${t.terminalTexts[index]}</p>`}
+              ${terminalAction(index, actions[index], compact, t.terminalPending)}
             </article>`).join('')}
         </div>
       </div>

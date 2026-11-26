@@ -47,8 +47,8 @@ function currentScene() {
   return names.includes(scene) ? scene : 'falcon';
 }
 
-export function renderHero(t) {
-  const scene = currentScene();
+export function renderHero(t, { selectable = true } = {}) {
+  const scene = selectable ? currentScene() : 'falcon';
   const words = t.banner;
   const [first, second] = t.heroTitle.split('<br>');
   return `<section class="market-cover${scenes[scene].left ? ' cover-left' : ''}${scenes[scene].study ? ' cover-study' : ''}" id="home" data-art="${scene}" aria-labelledby="hero-title">
@@ -61,17 +61,17 @@ export function renderHero(t) {
       ${t.heroEnglishTitle ? `<span class="cover-english-title" lang="en">${t.heroEnglishTitle}</span>` : ''}
       <p>${t.heroText}</p>
     </div>
-    <div class="wrap cover-tools">
+    ${selectable ? `<div class="wrap cover-tools">
       <div class="scene-choices" role="group" aria-label="${words.group}">
         ${names.map((name, i) => `<button type="button" data-scene="${name}" aria-pressed="${name === scene}">${words.scenes[i]}</button>`).join('')}
       </div>
       <button type="button" class="motion-toggle" data-motion hidden><span aria-hidden="true"></span></button>
-    </div>
+    </div>` : ''}
   </section>`;
 }
 
 // Lay out the tablet once per resize. The falcon keeps its original frame.
-function positionTablet(frame, art, copy, tools) {
+function positionTablet(frame, art, copy, contentWrap) {
   const box = art.getBoundingClientRect();
   const narrow = box.width <= 700;
   const centerY = box.top + box.height * (narrow ? .48 : .49);
@@ -90,9 +90,9 @@ function positionTablet(frame, art, copy, tools) {
       }
     }
   }
-  // Keep the established tablet size, then fit it between the copy and the controls' right edge.
+  // Fit the tablet between the headline and the right edge of the content area.
   const sizingCenter = frame.center - (box.width > 980 ? 80 : 0);
-  const right = tools.getBoundingClientRect().right - box.left;
+  const right = contentWrap.getBoundingClientRect().right - box.left;
   const width = Math.max(1, Math.min(
     2 * halfHeight * tabletSize.width / tabletSize.height,
     2 * (sizingCenter - leftLimit),
@@ -105,7 +105,7 @@ export function bindHero(section, words) {
   const canvas = section.querySelector('canvas');
   const art = section.querySelector('.cover-art');
   const copy = section.querySelector('.cover-copy');
-  const tools = section.querySelector('.cover-tools');
+  const contentWrap = section.querySelector('.cover-tools') ?? copy;
   const context = canvas.getContext('2d');
   const poster = section.querySelector('.cover-poster');
   const motion = section.querySelector('[data-motion]');
@@ -119,6 +119,8 @@ export function bindHero(section, words) {
   let request = 0;
   function playing() { return motionOverride ?? !reduced.matches; }
   function updateMotionButton() {
+    if (!motion) return;
+    motion.hidden = !draw;
     const label = playing() ? words.pause : words.play;
     motion.setAttribute('aria-label', label);
     motion.title = label;
@@ -157,7 +159,7 @@ export function bindHero(section, words) {
       const minimumShift = Math.ceil(width / 2 + 16 - tablet.left);
       const shift = Math.max(balancedShift, minimumShift);
       section.style.setProperty('--falcon-shift', `${shift}px`);
-      tabletPose = positionTablet(tablet, art, copy, tools);
+      tabletPose = positionTablet(tablet, art, copy, contentWrap);
     }
     if (scenes[name].study) {
       art.style.setProperty('--study-crop', `${lightStudyCrop(name, width <= 680) * 100}%`);
@@ -181,7 +183,7 @@ export function bindHero(section, words) {
     draw = undefined;
     elapsed = 0;
     canvas.classList.remove('is-ready');
-    motion.hidden = true;
+    updateMotionButton();
     schedule();
     resize();
     if (!context || !scenes[name].load) return;
@@ -191,7 +193,6 @@ export function bindHero(section, words) {
       if (listeners.signal.aborted || revision !== request) return;
       draw = renderer;
       paint();
-      motion.hidden = false;
       updateMotionButton();
       schedule();
     } catch {
@@ -200,7 +201,7 @@ export function bindHero(section, words) {
     }
   }
   const sceneChoices = section.querySelector('.scene-choices');
-  sceneChoices.addEventListener('click', event => {
+  sceneChoices?.addEventListener('click', event => {
     const button = event.target.closest('button[data-scene]');
     if (!button || section.dataset.art === button.dataset.scene) return;
     const url = new URL(location.href);
@@ -208,7 +209,7 @@ export function bindHero(section, words) {
     history.replaceState(null, '', url);
     showScene(button.dataset.scene);
   }, options);
-  sceneChoices.addEventListener('keydown', event => {
+  sceneChoices?.addEventListener('keydown', event => {
     const current = names.indexOf(event.target.dataset.scene);
     if (current < 0) return;
     const next = horizontalChoiceIndex(event.key, current, choices.length);
@@ -217,7 +218,7 @@ export function bindHero(section, words) {
     choices[next].focus();
     choices[next].click();
   }, options);
-  motion.addEventListener('click', () => {
+  motion?.addEventListener('click', () => {
     motionOverride = !playing();
     updateMotionButton();
     schedule();

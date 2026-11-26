@@ -1,5 +1,6 @@
 import { copy } from './portal-copy.js';
-import { renderHome, bindHome } from './home.js';
+import { bindLoginDialog, demoAccountKey, renderLoginDialog } from './login-dialog.js';
+import { renderHome, renderGuestHome, bindHome } from './home.js';
 import { renderManual } from './manual.js';
 import { renderLanguageMenu, bindLanguageMenu, resolveLanguage } from './language-menu.js';
 
@@ -15,30 +16,17 @@ const requestedLanguage = new URLSearchParams(location.search).get('lang');
 let language = resolveLanguage(requestedLanguage);
 let renderedRoute = '';
 let releaseHome;
+let openLogin;
 
 function hasCustomerSession() {
   try {
-    return Boolean(sessionStorage.getItem('faucon-demo-login-account')?.trim());
+    return Boolean(sessionStorage.getItem(demoAccountKey)?.trim());
   } catch {
     return false;
   }
 }
 
-function portalLoginHref() {
-  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
-  const login = local
-    ? new URL(location.origin)
-    : new URL('https://cain7760.github.io/FAUCONTRADE-Customer-PC/login.html');
-  if (local) {
-    login.port = '4177';
-    login.pathname = '/login.html';
-  }
-  login.searchParams.set('from', 'portal');
-  login.searchParams.set('lang', language);
-  return login.href;
-}
-
-function renderHeader(t) {
+function renderHeader(t, guest) {
   return `
     <a class="skip-link" href="#main-content">${t.skip}</a>
     <header class="site-header">
@@ -46,10 +34,15 @@ function renderHeader(t) {
         <a class="brand" href="#home" aria-label="FAUCON TRADE">
           <img src="assets/customer-brand-dark.svg" width="953" height="277" alt="">
         </a>
-        <nav class="site-nav" aria-label="${t.footer}">
-          ${sections.map((section,index) => `<a href="#${section}">${t.nav[index]}</a>`).join('')}
-          ${hasCustomerSession() ? '' : `<a class="portal-login" href="${portalLoginHref()}">${t.portalLogin}</a>`}
-        </nav>
+        ${guest
+          ? `<button class="terminal-action guest-login" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0" stroke-linecap="round"/>
+              </svg>${t.loginToView}
+            </button>`
+          : `<nav class="site-nav" aria-label="${t.footer}">
+              ${sections.map((section, index) => `<a href="#${section}">${t.nav[index]}</a>`).join('')}
+            </nav>`}
         <div class="language-control">${renderLanguageMenu(language, t.languageLabel)}</div>
       </div>
     </header>`;
@@ -57,6 +50,15 @@ function renderHeader(t) {
 
 function readRoute() {
   const hash = location.hash.slice(1);
+  if (!hasCustomerSession()) {
+    if (!['', 'home', 'terminals', 'main-content'].includes(hash)) {
+      const url = new URL(location.href);
+      url.hash = '';
+      history.replaceState(history.state, '', url);
+      return { key: 'guest', entry: 'home' };
+    }
+    return { key: 'guest', entry: hash || 'home' };
+  }
   if (hash.startsWith('/manual/')) {
     const [, , chapter, entry] = hash.split('/');
     return { key: 'manual:' + chapter, chapter, entry };
@@ -85,16 +87,23 @@ function render({ preserveScroll = false, menuClick = false, keyboard = false } 
   const t = copy[language];
   const route = readRoute();
   const previousScroll = window.scrollY;
+  const guest = route.key === 'guest';
   document.documentElement.lang = language;
+  document.documentElement.classList.toggle('portal-guest', guest);
   document.documentElement.classList.toggle('portal-manual', Boolean(route.chapter));
   document.title = `FAUCON TRADE · ${route.chapter ? t.manualTitle : t.footer}`;
   if (route.key !== renderedRoute || preserveScroll) {
     releaseHome?.();
-    app.innerHTML = renderHeader(t) + (route.chapter ? renderManual(t, route.chapter, faqDestinations) : renderHome(t, faqDestinations));
+    let content;
+    if (guest) content = renderGuestHome(t);
+    else if (route.chapter) content = renderManual(t, route.chapter, faqDestinations);
+    else content = renderHome(t, faqDestinations);
+    app.innerHTML = renderHeader(t, guest) + content + (guest ? renderLoginDialog(t.loginDialog) : '');
+    openLogin = guest ? bindLoginDialog(app.querySelector('#portal-login-dialog'), t.loginDialog, showMemberPortal) : undefined;
     releaseHome = route.chapter ? undefined : bindHome(app.querySelector('main'), t);
     renderedRoute = route.key;
   }
-  app.querySelectorAll('.site-nav a[href^="#"]').forEach(link => {
+  app.querySelectorAll('.site-nav a').forEach(link => {
     if (link.hash === location.hash) link.setAttribute('aria-current','location');
     else link.removeAttribute('aria-current');
   });
@@ -120,8 +129,22 @@ function render({ preserveScroll = false, menuClick = false, keyboard = false } 
   });
 }
 
+function showMemberPortal() {
+  const url = new URL(location.href);
+  url.hash = '';
+  history.replaceState(history.state, '', url);
+  render();
+
+  requestAnimationFrame(() => app.querySelector('main').focus({preventScroll: true}));
+}
+
 app.addEventListener('click', event => {
-  const menuLink = event.target.closest('.site-nav a[href^="#"]');
+  const loginTrigger = event.target.closest('[data-portal-login]');
+  if (loginTrigger) {
+    openLogin?.(loginTrigger);
+    return;
+  }
+  const menuLink = event.target.closest('.site-nav a');
   if (menuLink && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) {
     event.preventDefault();
     if (menuLink.hash !== location.hash) history.pushState(null, '', menuLink.href);
@@ -155,6 +178,9 @@ app.addEventListener('input', event => {
 });
 
 window.addEventListener('hashchange', () => render());
+window.addEventListener('pageshow', event => {
+  if (event.persisted && readRoute().key !== renderedRoute) render();
+});
 render();
 
 // WebKit supports round() for lengths, but cannot yet round an intrinsic label width in CSS.
