@@ -20,7 +20,7 @@ function terminalAction(index, label, guest) {
 }
 
 export function renderTerminals(t, { compact = false } = {}) {
-  const actions = [compact ? t.download : t.downloadNow, t.customer, t.appEntry];
+  const actions = [t.download, t.customer, t.appEntry];
   return `
     <section class="access-band" id="terminals" aria-labelledby="terminals-title">
       <div class="wrap">

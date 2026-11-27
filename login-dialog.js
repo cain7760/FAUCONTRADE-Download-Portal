@@ -132,7 +132,7 @@ export function bindLoginDialog(dialog, t, onLogin) {
     try {
       const { mountPasswordRecovery } = await import('./assets/portal-password-recovery.js');
       if (!dialog.open || request !== recoveryRequest) return;
-      mountedRecovery = mountPasswordRecovery(recoveryHost, () => {
+      mountedRecovery = mountPasswordRecovery(recoveryHost, t.recoveryForm, () => {
         password.value = '';
         showPassword(false);
         showFieldError(password, passwordError, false);
