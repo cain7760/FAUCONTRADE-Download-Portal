@@ -4,21 +4,23 @@ const deviceSymbols = [
   '<path fill-rule="evenodd" d="M8 1h8a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Zm2.5 2.5a1 1 0 0 0 0 2h3a1 1 0 0 0 0-2h-3Zm-.5 15a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-4Z"/>',
 ];
 
-const terminalURLs = [null, "https://cain7760.github.io/FAUCONTRADE-Customer-PC/login.html", "https://cain7760.github.io/FAUCON-TRADE-Customer-App/"];
+const customerEntry = /\/portal\/design-v2\/(?:index\.html)?$/.test(location.pathname)
+  ? '../../equity-variants.html?layout=classic'
+  : 'https://cain7760.github.io/FAUCONTRADE-Customer-PC/equity-variants.html?layout=classic';
 
-function terminalAction(index, label, guest, unavailableLabel) {
+function terminalAction(index, label, guest) {
   const content = `<svg class="device-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${deviceSymbols[index]}</svg><span>${label}</span>`;
   if (guest) {
     return `<button class="terminal-action" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">${content}</button>`;
   }
-  const href = terminalURLs[index];
-  if (href) return `<a class="terminal-action" href="${href}">${content}</a>`;
-  return `<button class="terminal-action" type="button" disabled>${unavailableLabel}</button>`;
+  if (index === 0) {
+    return `<a class="terminal-action" href="assets/windows-download-test.txt" download="测试文件.txt">${content}</a>`;
+  }
+  return `<a class="terminal-action" href="${customerEntry}">${content}</a>`;
 }
 
 export function renderTerminals(t, { compact = false } = {}) {
-  const mobileEntry = compact ? (t.guestAppEntry ?? t.appEntry) : t.appEntry;
-  const actions = [t.download, t.customer, mobileEntry];
+  const actions = [compact ? t.download : t.downloadNow, t.customer, t.appEntry];
   return `
     <section class="access-band" id="terminals" aria-labelledby="terminals-title">
       <div class="wrap">
@@ -30,7 +32,7 @@ export function renderTerminals(t, { compact = false } = {}) {
               ${compact ? '' : `<span class="terminal-platform">${t.terminalPlatforms[index]}</span>`}
               <h3>${name}</h3>
               ${compact ? '' : `<p>${t.terminalTexts[index]}</p>`}
-              ${terminalAction(index, actions[index], compact, t.terminalPending)}
+              ${terminalAction(index, actions[index], compact)}
             </article>`).join('')}
         </div>
       </div>

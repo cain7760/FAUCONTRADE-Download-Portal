@@ -88,13 +88,13 @@ export const copy = {
     ],
     "terminalTexts": [
       "为桌面工作场景提供安装式入口。展开持仓、订单与交易面板，在电脑上集中处理日常操作。",
-      "通过浏览器登录客户账户，查看 TRS 持仓与订单，或进入期权页面发起询价。",
+      "在浏览器中查看 TRS 持仓与订单，或进入期权页面发起询价。",
       "把关注的信息带在身边。在移动设备上查看持仓、订单与成交记录，随时了解订单进展。"
     ],
     "download": "下载 Windows 客户端",
+    "downloadNow": "立即下载",
     "customer": "进入网页端",
-    "appEntry": "前往h5访问",
-    "guestAppEntry": "前往H5访问",
+    "appEntry": "前往H5访问",
     "faqTitle": "每一次开始，都有指引",
     "faqText": "按问题查阅操作手册中的对应说明。",
     "faqs": [
@@ -200,7 +200,6 @@ export const copy = {
     "skip": "跳到正文",
     "languageLabel": "选择语言",
     "overview": "交易流程与接入方式",
-    "terminalPending": "安装包待发布",
     "banner": {
       "scenes": [
         "游隼",
@@ -301,13 +300,13 @@ export const copy = {
     ],
     "terminalTexts": [
       "為桌面工作場景提供安裝式入口。展開持倉、訂單與交易面板，在電腦上集中處理日常操作。",
-      "透過瀏覽器登入客戶帳戶，查看 TRS 持倉與訂單，或進入期權頁面發起詢價。",
+      "在瀏覽器中查看 TRS 持倉與訂單，或進入期權頁面發起詢價。",
       "把關注的資訊帶在身邊。在行動裝置上查看持倉、訂單與成交紀錄，隨時掌握訂單進度。"
     ],
     "download": "下載 Windows 客戶端",
+    "downloadNow": "立即下載",
     "customer": "進入網頁端",
-    "appEntry": "前往h5訪問",
-    "guestAppEntry": "前往H5訪問",
+    "appEntry": "前往H5訪問",
     "faqTitle": "每一次開始，都有指引",
     "faqText": "依照問題查閱操作手冊中的對應說明。",
     "faqs": [
@@ -413,7 +412,6 @@ export const copy = {
     "skip": "跳至正文",
     "languageLabel": "選擇語言",
     "overview": "交易流程與接入方式",
-    "terminalPending": "安裝套件待發布",
     "banner": {
       "scenes": [
         "遊隼",
@@ -514,10 +512,11 @@ export const copy = {
     ],
     "terminalTexts": [
       "Install the Windows client to manage positions, review orders and use the trading panel on your desktop.",
-      "Sign in to your customer account in a browser to review TRS positions and orders or request an options quote.",
+      "Review TRS positions and orders in your browser or request an options quote.",
       "Keep your trading activity close at hand. Review positions, orders and fills on your mobile device and follow order progress wherever you are."
     ],
     "download": "Download Windows client",
+    "downloadNow": "Download now",
     "customer": "Open web terminal",
     "appEntry": "Open mobile web app",
     "faqTitle": "Guidance from the first step",
@@ -625,7 +624,6 @@ export const copy = {
     "skip": "Skip to content",
     "languageLabel": "Select language",
     "overview": "Trading workflow and access",
-    "terminalPending": "Installer pending",
     "banner": {
       "scenes": [
         "Falcon",
