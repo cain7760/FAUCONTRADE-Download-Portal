@@ -4,19 +4,20 @@ const deviceSymbols = [
   '<path fill-rule="evenodd" d="M8 1h8a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Zm2.5 2.5a1 1 0 0 0 0 2h3a1 1 0 0 0 0-2h-3Zm-.5 15a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-4Z"/>',
 ];
 
-const customerEntry = /\/portal\/design-v2\/(?:index\.html)?$/.test(location.pathname)
-  ? '../../equity-variants.html?layout=classic'
-  : 'https://cain7760.github.io/FAUCONTRADE-Customer-PC/equity-variants.html?layout=classic';
+const customerRoot = /\/portal\/design-v2\/(?:index\.html)?$/.test(location.pathname)
+  ? '../../'
+  : 'https://cain7760.github.io/FAUCONTRADE-Customer-PC/';
 
 function terminalAction(index, label, guest) {
   const content = `<svg class="device-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${deviceSymbols[index]}</svg><span>${label}</span>`;
-  if (guest) {
+  if (guest && index === 0) {
     return `<button class="terminal-action" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">${content}</button>`;
   }
   if (index === 0) {
     return `<a class="terminal-action" href="assets/windows-download-test.txt" download="测试文件.txt">${content}</a>`;
   }
-  return `<a class="terminal-action" href="${customerEntry}">${content}</a>`;
+  const entry = guest ? 'login.html' : 'equity-variants.html?layout=classic';
+  return `<a class="terminal-action" href="${customerRoot}${entry}">${content}</a>`;
 }
 
 export function renderTerminals(t, { compact = false } = {}) {
