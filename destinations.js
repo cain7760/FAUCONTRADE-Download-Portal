@@ -8,32 +8,28 @@ const customerRoot = /\/portal\/design-v2\/(?:index\.html)?$/.test(location.path
   ? '../../'
   : 'https://cain7760.github.io/FAUCONTRADE-Customer-PC/';
 
-function terminalAction(index, label, guest) {
+function terminalAction(index, label) {
   const content = `<svg class="device-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${deviceSymbols[index]}</svg><span>${label}</span>`;
-  if (guest && index === 0) {
-    return `<button class="terminal-action" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">${content}</button>`;
-  }
   if (index === 0) {
     return `<a class="terminal-action" href="assets/windows-download-test.txt" download="测试文件.txt">${content}</a>`;
   }
-  const entry = guest ? 'login.html' : 'equity-variants.html?layout=classic';
-  return `<a class="terminal-action" href="${customerRoot}${entry}">${content}</a>`;
+  return `<a class="terminal-action" href="${customerRoot}equity-variants.html?layout=classic">${content}</a>`;
 }
 
-export function renderTerminals(t, { compact = false } = {}) {
+function renderTerminals(t) {
   const actions = [t.download, t.customer, t.appEntry];
   return `
     <section class="access-band" id="terminals" aria-labelledby="terminals-title">
       <div class="wrap">
-        <h2 class="${compact ? 'sr-only' : 'destination-title'}" id="terminals-title">${t.terminalTitle}</h2>
-        ${compact ? '' : `<p class="destination-intro">${t.terminalText}</p>`}
+        <h2 class="destination-title" id="terminals-title">${t.terminalTitle}</h2>
+        <p class="destination-intro">${t.terminalText}</p>
         <div class="terminal-cards">
           ${t.terminalNames.map((name, index) => `
             <article class="terminal-card">
-              ${compact ? '' : `<span class="terminal-platform">${t.terminalPlatforms[index]}</span>`}
+              <span class="terminal-platform">${t.terminalPlatforms[index]}</span>
               <h3>${name}</h3>
-              ${compact ? '' : `<p>${t.terminalTexts[index]}</p>`}
-              ${terminalAction(index, actions[index], compact)}
+              <p>${t.terminalTexts[index]}</p>
+              ${terminalAction(index, actions[index])}
             </article>`).join('')}
         </div>
       </div>

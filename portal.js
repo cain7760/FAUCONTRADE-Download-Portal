@@ -51,7 +51,7 @@ function renderHeader(t, guest) {
 function readRoute() {
   const hash = location.hash.slice(1);
   if (!hasCustomerSession()) {
-    if (!['', 'home', 'terminals', 'main-content'].includes(hash)) {
+    if (!['', 'home', 'main-content'].includes(hash)) {
       const url = new URL(location.href);
       url.hash = '';
       history.replaceState(history.state, '', url);

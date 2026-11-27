@@ -1,7 +1,7 @@
 import { observeSize, observeVisibility } from './layout-observers.js';
 import { horizontalChoiceIndex } from './choice-navigation.js';
 import { renderHero, bindHero } from './hero-scenes.js';
-import { renderDestinations, renderTerminals } from './destinations.js';
+import { renderDestinations } from './destinations.js';
 
 const walkthroughs = [
   'assets/customer-buy-demo-pov-v2',
@@ -148,7 +148,6 @@ function bindDemo(section) {
 export function renderGuestHome(t) {
   return `<main id="main-content" class="portal-home guest-home" tabindex="-1">
     <div class="home-intro">${renderHero(t, { selectable: false })}</div>
-    ${renderTerminals(t, { compact: true })}
   </main>`;
 }
 
