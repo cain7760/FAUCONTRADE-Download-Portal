@@ -579,7 +579,14 @@ main:focus { outline: none; }
   .execution-steps .journey-heading h4 { font-size: 18px; }
   .execution-steps p { margin: 5px 0 0 34px; max-inline-size: none; font-size: 14px; }
 }
-.demo-chapter { padding-block-end: var(--chapter-heading-gap); background: #131314; }
+.product-chapter, .demo-chapter {
+  --compact-chapter-gap: calc(var(--chapter-heading-gap) * 2 / 3);
+  padding-block-end: var(--compact-chapter-gap);
+}
+@media (min-width: 1280px) {
+  .product-chapter, .demo-chapter { padding-block-start: var(--compact-chapter-gap); }
+}
+.demo-chapter { background: #131314; }
 .studio { text-align: center; }
 .studio-title { text-align: start; }
 .studio-title p { margin: 16px 0 32px; }
