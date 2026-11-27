@@ -34,16 +34,76 @@ export function renderLoginDialog(t) {
           </div>
           <div class="portal-login-options">
             <label><input type="checkbox" name="remember"> ${t.remember}</label>
-            <button class="portal-login-help" type="button" aria-expanded="false" aria-controls="portal-login-help">${t.forgot}</button>
+            <button class="portal-login-help" type="button" aria-haspopup="dialog" aria-controls="portal-recovery-dialog">${t.forgot}</button>
           </div>
-          <p class="portal-login-message" id="portal-login-help" role="status" hidden>${t.help}</p>
+          <p class="portal-login-message" id="portal-login-status" role="status" hidden>${t.recoverySuccess}</p>
           <p class="portal-login-message" role="alert" hidden>${t.error}</p>
           <button class="portal-login-submit" type="submit">${t.submit}</button>
         </form>
         <p class="portal-login-note" id="portal-login-demo">${t.demo}</p>
       </section>
     </div>
+    <dialog class="portal-recovery-dialog" id="portal-recovery-dialog" aria-labelledby="portal-recovery-title">
+      <header class="portal-recovery-header">
+        <h2 id="portal-recovery-title">${t.recoveryTitle}</h2>
+        <button class="portal-recovery-close" type="button" aria-label="${t.recoveryClose}">${icon('close')}</button>
+      </header>
+      <div class="portal-recovery-content">
+        <p class="portal-recovery-status" role="status" hidden></p>
+        <div class="portal-recovery-form"></div>
+      </div>
+      <footer class="portal-recovery-actions">
+        <button type="button" class="portal-recovery-cancel">${t.recoveryCancel}</button>
+        <button type="button" class="portal-recovery-submit" disabled>${t.recoverySubmit}</button>
+      </footer>
+    </dialog>
   </dialog>`;
+}
+
+function bindPasswordRecovery(panel, trigger, t, onSuccess) {
+  const host = panel.querySelector('.portal-recovery-form');
+  const status = panel.querySelector('.portal-recovery-status');
+  const confirm = panel.querySelector('.portal-recovery-submit');
+  let form;
+  let request = 0;
+
+  function clear() {
+    form?.dispose();
+    form = undefined;
+    confirm.disabled = true;
+  }
+
+  trigger.addEventListener('click', async () => {
+    if (panel.open) return;
+    const pending = ++request;
+    clear();
+    status.textContent = t.recoveryLoading;
+    status.hidden = false;
+    panel.showModal();
+
+    try {
+      const { mountPasswordRecovery } = await import('./assets/portal-password-recovery.js');
+      if (!panel.open || pending !== request) return;
+      form = mountPasswordRecovery(host, () => {
+        panel.close();
+        onSuccess();
+      });
+      status.hidden = true;
+      confirm.disabled = false;
+      host.querySelector('input').focus();
+    } catch {
+      if (!panel.open || pending !== request) return;
+      status.textContent = t.recoveryError;
+      status.hidden = false;
+    }
+  });
+  for (const button of panel.querySelectorAll('.portal-recovery-close, .portal-recovery-cancel')) {
+    button.addEventListener('click', () => panel.close());
+  }
+  panel.addEventListener('close', () => {
+    if (!panel.open) clear();
+  });
+  confirm.addEventListener('click', () => form?.submit());
 }
 
 export function bindLoginDialog(dialog, t, onLogin) {
@@ -53,7 +113,7 @@ export function bindLoginDialog(dialog, t, onLogin) {
   const remember = form.elements.remember;
   const visibility = form.querySelector('.portal-login-show');
   const help = form.querySelector('.portal-login-help');
-  const helpText = form.querySelector('#portal-login-help');
+  const loginStatus = form.querySelector('#portal-login-status');
   const error = form.querySelector('[role="alert"]');
   let opener;
 
@@ -73,8 +133,7 @@ export function bindLoginDialog(dialog, t, onLogin) {
     username.setCustomValidity('');
     password.autocomplete = 'off';
     showPassword(false);
-    help.setAttribute('aria-expanded', 'false');
-    helpText.hidden = true;
+    loginStatus.hidden = true;
     error.hidden = true;
     opener?.focus({preventScroll: true});
   });
@@ -83,9 +142,11 @@ export function bindLoginDialog(dialog, t, onLogin) {
   remember.addEventListener('change', () => {
     password.autocomplete = remember.checked ? 'current-password' : 'off';
   });
-  help.addEventListener('click', () => {
-    helpText.hidden = !helpText.hidden;
-    help.setAttribute('aria-expanded', String(!helpText.hidden));
+  bindPasswordRecovery(dialog.querySelector('#portal-recovery-dialog'), help, t, () => {
+    password.value = '';
+    showPassword(false);
+    loginStatus.hidden = false;
+    password.focus();
   });
   username.addEventListener('input', () => username.setCustomValidity(''));
 

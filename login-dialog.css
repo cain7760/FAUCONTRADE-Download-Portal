@@ -119,3 +119,67 @@ html:has(.portal-login-dialog[open]) { overflow: hidden; }
   .portal-login-access { padding: 34px 24px 28px; }
   .portal-login-input input { font-size: 16px; }
 }
+
+.portal-recovery-dialog {
+  width: min(480px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid #313238;
+  border-radius: 5px;
+  color: #e6ebf3;
+  background: #202226;
+  box-shadow: 0 22px 64px #000b;
+  --el-color-primary: #bb984a;
+  --el-text-color-regular: #c2c6ce;
+  --el-text-color-placeholder: #747b87;
+  --el-border-radius-base: 4px;
+}
+.portal-recovery-dialog::backdrop { background: rgb(4 6 8 / 60%); }
+.portal-recovery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid #313238;
+  background: #24272c;
+}
+.portal-recovery-header h2 { font-size: 14px; line-height: 20px; }
+.portal-recovery-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-right: -6px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  color: #aebaca;
+  background: transparent;
+}
+.portal-recovery-close:hover { color: var(--accent); background: #303237; }
+.portal-recovery-content { padding: 20px 16px; }
+.portal-recovery-status { max-width: 280px; margin-inline: auto; color: #a6adb7; font-size: 13px; }
+.portal-recovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px 16px;
+  border-top: 1px solid #313238;
+}
+.portal-recovery-actions button {
+  min-width: 88px;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid #454a53;
+  border-radius: 4px;
+  color: #c8ced7;
+  background: #292c31;
+  font-size: 12px;
+}
+.portal-recovery-cancel:hover { border-color: #6a707a; background: #32363d; }
+.portal-recovery-actions .portal-recovery-submit { border-color: #bb984a; background: #bb984a; color: #fff; }
+.portal-recovery-submit:not(:disabled):hover { border-color: #c8a757; background: #c8a757; }
+.portal-recovery-submit:disabled { opacity: .45; cursor: default; }
