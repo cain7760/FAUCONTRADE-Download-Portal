@@ -47,7 +47,7 @@ function currentScene() {
   return names.includes(scene) ? scene : 'falcon';
 }
 
-export function renderHero(t, { selectable = true } = {}) {
+export function renderHero(t, { selectable = true, action = '' } = {}) {
   const scene = selectable ? currentScene() : 'falcon';
   const words = t.banner;
   const [first, second] = t.heroTitle.split('<br>');
@@ -59,7 +59,7 @@ export function renderHero(t, { selectable = true } = {}) {
     <div class="wrap cover-copy">
       <h1 id="hero-title"><span>${first}</span><span>${second}</span></h1>
       ${t.heroEnglishTitle ? `<span class="cover-english-title" lang="en">${t.heroEnglishTitle}</span>` : ''}
-      <p>${t.heroText}</p>
+      <p>${t.heroText}</p>${action}
     </div>
     ${selectable ? `<div class="wrap cover-tools">
       <div class="scene-choices" role="group" aria-label="${words.group}">

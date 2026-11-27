@@ -35,11 +35,7 @@ function renderHeader(t, guest) {
           <img src="assets/customer-brand-dark.svg" width="953" height="277" alt="">
         </a>
         ${guest
-          ? `<button class="terminal-action guest-login" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0" stroke-linecap="round"/>
-              </svg>${t.loginToView}
-            </button>`
+          ? ''
           : `<nav class="site-nav" aria-label="${t.footer}">
               ${sections.map((section, index) => `<a href="#${section}">${t.nav[index]}</a>`).join('')}
             </nav>`}

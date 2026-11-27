@@ -146,8 +146,14 @@ function bindDemo(section) {
 }
 
 export function renderGuestHome(t) {
+  const action = `<button class="terminal-action guest-login" type="button" data-portal-login aria-haspopup="dialog" aria-controls="portal-login-dialog">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0" stroke-linecap="round"/>
+    </svg>
+    <span>${t.loginToView}</span>
+  </button>`;
   return `<main id="main-content" class="portal-home guest-home" tabindex="-1">
-    <div class="home-intro">${renderHero(t, { selectable: false })}</div>
+    <div class="home-intro">${renderHero(t, { selectable: false, action })}</div>
   </main>`;
 }
 
